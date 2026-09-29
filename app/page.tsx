@@ -1,76 +1,3 @@
-// 'use client'
-
-// import { useEffect, useState } from 'react'
-
-// export default function Page() {
-//   const [isBlinking, setIsBlinking] = useState(false)
-//   const [isLookingLeft, setIsLookingLeft] = useState(false)
-
-//   useEffect(() => {
-//     const interval = window.setInterval(() => {
-//       setIsBlinking(true)
-
-//       window.setTimeout(() => {
-//         setIsBlinking(false)
-//         setIsLookingLeft((value) => !value)
-//       }, 180)
-//     }, 3200)
-
-//     return () => window.clearInterval(interval)
-//   }, [])
-
-//   return (
-//     <main className="fixed inset-0 flex h-dvh w-screen items-center justify-center overflow-hidden bg-[#020a07] text-white">
-//       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,105,73,0.42),transparent_62%)]" />
-
-//       <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(0deg,transparent_0px,transparent_4px,rgba(102,255,183,0.18)_5px)]" />
-
-//       <div className="pointer-events-none absolute inset-0 opacity-15 [background-image:linear-gradient(rgba(74,222,128,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(74,222,128,0.15)_1px,transparent_1px)] [background-size:60px_60px]" />
-
-//       <div className="pointer-events-none absolute -left-1/4 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-emerald-100/10 to-transparent" />
-
-//       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-[clamp(3rem,9vh,8rem)]">
-//         <div className="flex items-center gap-[clamp(3rem,16vw,16rem)]">
-//           <Eye isBlinking={isBlinking} isLookingLeft={isLookingLeft} />
-//           <Eye isBlinking={isBlinking} isLookingLeft={isLookingLeft} />
-//         </div>
-
-//         <div className="h-[clamp(2rem,5vw,4rem)] w-[clamp(9rem,22vw,20rem)] rounded-b-full border-b-[clamp(0.55rem,1vw,1rem)] border-emerald-300 shadow-[0_8px_14px_rgba(74,222,128,0.28)]" />
-//       </div>
-
-//       <p className="absolute bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-center text-base font-bold tracking-[0.15em] text-emerald-50 md:bottom-10 md:text-2xl">
-//         profiled assumpt<span className="text-emerald-400">AI</span>on
-//       </p>
-//     </main>
-//   )
-// }
-
-// function Eye({
-//   isBlinking,
-//   isLookingLeft,
-// }: {
-//   isBlinking: boolean
-//   isLookingLeft: boolean
-// }) {
-//   return (
-//     <div
-//       className={[
-//         'relative flex size-[clamp(5rem,13vw,12rem)] items-center justify-center overflow-hidden rounded-[30%] border-[clamp(0.35rem,0.8vw,0.8rem)] border-[#27875e] bg-[#031c12] shadow-[inset_0_0_28px_rgba(0,0,0,0.9),0_0_32px_rgba(34,197,94,0.32)] transition-transform duration-150',
-//         isBlinking ? 'scale-y-[0.07]' : 'scale-y-100',
-//       ].join(' ')}
-//     >
-//       <div
-//         className={[
-//           'size-[35%] rounded-full bg-emerald-300 shadow-[0_0_12px_#6ee7b7,0_0_35px_#22c55e] transition-transform duration-500',
-//           isLookingLeft ? '-translate-x-[35%]' : 'translate-x-[35%]',
-//         ].join(' ')}
-//       />
-
-//       <div className="pointer-events-none absolute size-[60%] rounded-full border border-emerald-300/20" />
-//     </div>
-//   )
-// }
-
 export default function Home() {
   return (
     <main className="fixed inset-0 h-dvh w-screen touch-none overflow-hidden bg-black">
@@ -119,10 +46,10 @@ export default function Home() {
         </g>
       </svg>
 
-      <div className="relative flex h-full w-full items-center justify-center px-3 py-4 sm:px-6">
+      <div className="relative flex h-full w-full items-center justify-center">
         <svg
           aria-labelledby="robot-title robot-description"
-          className="h-auto w-[min(98vw,650px)]"
+          className="h-auto w-[min(100vw,760px)] max-w-none"
           fill="none"
           role="img"
           viewBox="0 0 420 330"
@@ -131,7 +58,7 @@ export default function Home() {
           <title id="robot-title">Schattige robot in de ruimte</title>
           <desc id="robot-description">
             Een grote donkerblauwe robotkop met een turquoise gezichtsscherm,
-            ogen en een glimlach.
+            ronde ogen en een glimlach.
           </desc>
 
           <defs>
@@ -247,24 +174,67 @@ export default function Home() {
             strokeWidth="8"
           />
 
-          {/* Ogen */}
-          <ellipse cx="178" cy="153" fill="#050A12" rx="14" ry="29">
-            <animate
-              attributeName="ry"
-              dur="4s"
-              repeatCount="indefinite"
-              values="29;29;2;2;29;29"
-            />
-          </ellipse>
+          {/* Linkeroog: cirkel bij open, lijn bij knipperen */}
+          <g>
+            <circle cx="178" cy="153" fill="#050A12" r="15">
+              <animate
+                attributeName="opacity"
+                calcMode="discrete"
+                dur="4s"
+                keyTimes="0;0.7;0.73;0.8;0.83;1"
+                repeatCount="indefinite"
+                values="1;1;0;0;1;1"
+              />
+            </circle>
 
-          <ellipse cx="257" cy="153" fill="#050A12" rx="14" ry="29">
-            <animate
-              attributeName="ry"
-              dur="4s"
-              repeatCount="indefinite"
-              values="29;29;2;2;29;29"
-            />
-          </ellipse>
+            <path
+              d="M163 153C171 160 185 160 193 153"
+              opacity="0"
+              stroke="#050A12"
+              strokeLinecap="round"
+              strokeWidth="8"
+            >
+              <animate
+                attributeName="opacity"
+                calcMode="discrete"
+                dur="4s"
+                keyTimes="0;0.7;0.73;0.8;0.83;1"
+                repeatCount="indefinite"
+                values="0;0;1;1;0;0"
+              />
+            </path>
+          </g>
+
+          {/* Rechteroog: cirkel bij open, lijn bij knipperen */}
+          <g>
+            <circle cx="257" cy="153" fill="#050A12" r="15">
+              <animate
+                attributeName="opacity"
+                calcMode="discrete"
+                dur="4s"
+                keyTimes="0;0.7;0.73;0.8;0.83;1"
+                repeatCount="indefinite"
+                values="1;1;0;0;1;1"
+              />
+            </circle>
+
+            <path
+              d="M242 153C250 160 264 160 272 153"
+              opacity="0"
+              stroke="#050A12"
+              strokeLinecap="round"
+              strokeWidth="8"
+            >
+              <animate
+                attributeName="opacity"
+                calcMode="discrete"
+                dur="4s"
+                keyTimes="0;0.7;0.73;0.8;0.83;1"
+                repeatCount="indefinite"
+                values="0;0;1;1;0;0"
+              />
+            </path>
+          </g>
 
           {/* Glimlach */}
           <path
@@ -292,8 +262,8 @@ export default function Home() {
             ry="6"
           />
 
-          {/* Klein lampje */}
-          <circle cx="291" cy="101" fill="#EEFFF9" opacity="0.9" r="8" />
+          {/* Reflecterend lampje op het scherm */}
+          <circle cx="291" cy="101" fill="#EEFFF9" opacity="0.9" r="6" />
         </svg>
       </div>
     </main>
