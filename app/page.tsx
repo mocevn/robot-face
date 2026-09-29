@@ -1,69 +1,72 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useEffect, useState } from 'react'
+
+export default function Page() {
+  const [isBlinking, setIsBlinking] = useState(false)
+  const [isLookingLeft, setIsLookingLeft] = useState(false)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setIsBlinking(true)
+
+      window.setTimeout(() => {
+        setIsBlinking(false)
+        setIsLookingLeft((value) => !value)
+      }, 180)
+    }, 3200)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="fixed inset-0 flex h-dvh w-screen items-center justify-center overflow-hidden bg-[#020a07] text-white">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,105,73,0.42),transparent_62%)]" />
+
+      <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(0deg,transparent_0px,transparent_4px,rgba(102,255,183,0.18)_5px)]" />
+
+      <div className="pointer-events-none absolute inset-0 opacity-15 [background-image:linear-gradient(rgba(74,222,128,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(74,222,128,0.15)_1px,transparent_1px)] [background-size:60px_60px]" />
+
+      <div className="pointer-events-none absolute -left-1/4 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-emerald-100/10 to-transparent" />
+
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-[clamp(3rem,9vh,8rem)]">
+        <div className="flex items-center gap-[clamp(3rem,16vw,16rem)]">
+          <Eye isBlinking={isBlinking} isLookingLeft={isLookingLeft} />
+          <Eye isBlinking={isBlinking} isLookingLeft={isLookingLeft} />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        <div className="h-[clamp(2rem,5vw,4rem)] w-[clamp(9rem,22vw,20rem)] rounded-b-full border-b-[clamp(0.55rem,1vw,1rem)] border-emerald-300 shadow-[0_8px_14px_rgba(74,222,128,0.28)]" />
+      </div>
+
+      <p className="absolute bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-center text-base font-bold tracking-[0.15em] text-emerald-50 md:bottom-10 md:text-2xl">
+        profiled assumpt<span className="text-emerald-400">AI</span>on
+      </p>
+    </main>
+  )
+}
+
+function Eye({
+  isBlinking,
+  isLookingLeft,
+}: {
+  isBlinking: boolean
+  isLookingLeft: boolean
+}) {
+  return (
+    <div
+      className={[
+        'relative flex size-[clamp(5rem,13vw,12rem)] items-center justify-center overflow-hidden rounded-[30%] border-[clamp(0.35rem,0.8vw,0.8rem)] border-[#27875e] bg-[#031c12] shadow-[inset_0_0_28px_rgba(0,0,0,0.9),0_0_32px_rgba(34,197,94,0.32)] transition-transform duration-150',
+        isBlinking ? 'scale-y-[0.07]' : 'scale-y-100',
+      ].join(' ')}
+    >
+      <div
+        className={[
+          'size-[35%] rounded-full bg-emerald-300 shadow-[0_0_12px_#6ee7b7,0_0_35px_#22c55e] transition-transform duration-500',
+          isLookingLeft ? '-translate-x-[35%]' : 'translate-x-[35%]',
+        ].join(' ')}
+      />
+
+      <div className="pointer-events-none absolute size-[60%] rounded-full border border-emerald-300/20" />
     </div>
-  );
+  )
 }
